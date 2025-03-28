@@ -1,0 +1,468 @@
+body,
+body * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -ms-user-select: none !important;
+  -moz-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+
+.paused-during-boot * {
+  animation-play-state: paused !important;
+}
+
+#boot-spinner {
+  margin-top: 10px;
+  color: #00ff00;
+  font-size: 1.2rem;
+  animation: blinkSpinner 1s step-end infinite;
+}
+
+@keyframes blinkSpinner {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Boot Loader Screen */
+.boot-line {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: fadeInLog 0.3s ease-out forwards;
+  margin-bottom: 2px;
+  font-family: 'Fira Code', monospace;
+}
+
+@keyframes fadeInLog {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.boot-line.success { color: #00ff00; }
+.boot-line.warn { color: #ffaa00; }
+.boot-line.error { color: #ff4444; }
+.boot-line.neutral { color: #ccc; }
+
+#boot-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  color: #00ff00;
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  padding: 40px;
+  z-index: 10000;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+#boot-text {
+  animation: bootBlink 1s step-end infinite;
+}
+
+@keyframes bootBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+#shell-prompt {
+  color: #00ff00;
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  margin-top: 10px;
+  animation: blinkPrompt 1s step-end infinite;
+}
+
+@keyframes blinkPrompt {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hidden-after-boot {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+/* Background Particles */
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.background span {
+  position: absolute;
+  display: block;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 50%;
+  animation: float 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 1; }
+}
+
+/* CRT Scanlines Overlay */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.05) 0px,
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  animation: crtScan 1s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes crtScan {
+  0% { background-position-y: 0; }
+  100% { background-position-y: 2px; }
+}
+
+/* Glitch flicker */
+body.glitch {
+  animation: glitchFlash 0.15s ease-in-out;
+}
+
+@keyframes glitchFlash {
+  0% { filter: contrast(1.2) brightness(1.2); }
+  50% { filter: contrast(0.8) brightness(0.8); }
+  100% { filter: none; }
+}
+
+/* Live Clock */
+.clock {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 0.95rem;
+  font-family: 'Fira Code', monospace;
+  color: #00ff00;
+  text-shadow: 0 0 2px #00ff00, 0 0 4px #00ff00, 0 0 8px #00ff00;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.cursor {
+  animation: blinkCursor 1s step-end infinite;
+  color: #00ff00;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Idle Mode */
+#idleMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Fira Code', monospace;
+  color: #00ff00;
+  font-size: 1rem;
+  text-shadow: 0 0 5px #00ff00;
+  opacity: 0;
+  z-index: 9999;
+  transition: opacity 0.5s;
+}
+
+.idle-fade {
+  opacity: 0.08 !important;
+  transition: opacity 0.5s ease;
+}
+
+/* Mouse Trail Characters */
+#trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.trail-char {
+  position: absolute;
+  font-family: 'Fira Code', monospace;
+  color: #00ff00;
+  opacity: 0.8;
+  font-size: 1rem;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+  animation: fadeTrail 0.6s ease-out forwards;
+}
+
+@keyframes fadeTrail {
+  to {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+.burst-char {
+  animation: explodeTrail 0.6s ease-out forwards;
+  position: absolute;
+  transform: translate(0, 0);
+}
+
+@keyframes explodeTrail {
+  to {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(1.5);
+  }
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-family: 'Fira Code', monospace;
+  font-size: 1.2rem;
+  color: #00ff00;
+  pointer-events: none;
+  z-index: 9999;
+  user-select: none;
+  text-shadow: 0 0 2px #00ff00, 0 0 4px #00ff00, 0 0 8px #00ff00;
+  animation: cursorBlink 1s step-end infinite;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Main Content Layout */
+.container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#text {
+  font-size: 2.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #fff;
+  animation: blink 0.75s step-end infinite;
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+.highlight {
+  color: #00aaff;
+}
+
+.glow {
+  text-shadow: 0 0 2px #00aaff, 0 0 4px #00aaff;
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 8s;
+}
+
+.social i {
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.social i:hover {
+  color: #aaa;
+}
+
+.social a {
+  color: #00aaff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.social a:hover {
+  color: #0077cc;
+}
+
+.small-text {
+  font-size: 0.9rem;
+  margin-top: 10px;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 10s;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.cat {
+  max-width: 160px;
+  animation: bounce 1s infinite alternate ease-in-out;
+  margin-top: 20px;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-20px); }
+}
+
+/* Oogway Quotes */
+.quote {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #ffb347;
+  font-style: italic;
+  opacity: 1;
+  font-family: 'Fira Code', monospace;
+  z-index: 999999;
+  white-space: normal;
+  padding: 0 20px;
+  pointer-events: none;
+}
+
+/* Mobile Tweaks */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    min-height: 100dvh;
+    padding: 20px 20px;
+  }
+
+  #text {
+    font-size: clamp(1.2rem, 4.5vw, 1.7rem);
+    white-space: normal;
+    border: none;
+  }
+
+  .quote {
+    bottom: 80px;
+    font-size: 1rem;
+  }
+
+  .social {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .social i {
+    font-size: 1.2rem;
+    vertical-align: middle;
+  }
+
+  .custom-cursor {
+    display: none;
+  }
+  
+
+  .clock {
+    font-size: 0.8rem;
+    top: 10px;
+    right: 10px;
+  }
+
+  .cat {
+    max-width: 140px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+  }
+
+  .small-text {
+    font-size: 0.8rem;
+    margin-top: 5px;
+  }
+}
+
+/* Layout Override for Desktop */
+@media (min-width: 769px) {
+  .container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .left {
+    flex: 1;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cat {
+    margin-top: 0;
+    max-width: 200px;
+  }
+}

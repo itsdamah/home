@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hi I'm Damah</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Boot Loader Screen -->
+  <div id="boot-screen">
+    <div id="boot-text"></div>
+    <div id="boot-spinner">|</div>
+    <div id="shell-prompt" style="display: none;">&gt;<span class="cursor">_</span></div>
+  </div>
+
+  <!-- CRT Scanlines Overlay -->
+  <div class="crt-overlay"></div>
+
+  <!-- Background Particles -->
+  <div class="background" id="particles"></div>
+
+  <!-- Live Clock -->
+  <div class="clock"><span id="clock"></span><span class="cursor">|</span></div>
+
+  <!-- Idle Message -->
+  <div id="idleMessage">you there? :(</div>
+
+  <!-- Mouse Trail Characters -->
+  <div id="trail"></div>
+
+  <!-- Main Content -->
+  <div class="container hidden-after-boot paused-during-boot">
+    <div class="left">
+      <div id="text"></div>
+      <div class="social">
+        <i class="fab fa-instagram"></i>
+        <a href="https://instagram.com/itsdamah_" target="_blank">@itsdamah_</a>
+      </div>
+      <div class="small-text">professional sleeper since 03</div>
+    </div>
+    <div class="right">
+      <img class="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Dancing Cat" />
+    </div>
+  </div>
+
+  <!-- Oogway Quotes -->
+  <div class="quote hidden-after-boot paused-during-boot" id="quote"></div>
+
+  <!-- Custom Cursor -->
+  <div class="custom-cursor hidden-after-boot paused-during-boot" id="customCursor">_</div>
+
+  <script src="script.js"></script>
+  
+  <script>
+    document.addEventListener("contextmenu", e => e.preventDefault());
+  </script>
+  
+</body>
+</html>
